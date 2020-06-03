@@ -9,11 +9,11 @@ import java.time.LocalDate;
  * @author Fulvio
  *
  */
-public class Voto {
+public class Voto implements Comparable<Voto> {
 	
 	private String corso ; // "Tecniche di Programmazione"
 	private int voto ; // 28
-	private LocalDate data ; // 15/06/2020
+	private LocalDate data ; // 15/06/2020  // usare LocalDate in caso di date ( bisogna importare java.time.LocalDate)
 	
 	/**
 	 * Costruisce un nuovo Voto.
@@ -27,6 +27,16 @@ public class Voto {
 		this.corso = corso;
 		this.voto = voto;
 		this.data = data;
+	}
+	
+	/**
+	 * Copy costructor di {@link Voto}: crea un nuovo {@link Voto}, copiando il contenuto del parametro {@code v}
+	 * @param v il voto da copiare
+	 */
+	public Voto(Voto v) {
+		this.corso=v.corso;
+		this.data=v.data;
+		this.voto=v.voto;
 	}
 
 	public String getCorso() {
@@ -57,6 +67,45 @@ public class Voto {
 	public String toString() {
 		return corso + ": " + voto + " (" + data + ")";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((corso == null) ? 0 : corso.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Voto other = (Voto) obj;
+		if (corso == null) {
+			if (other.corso != null)
+				return false;
+		} else if (!corso.equals(other.corso))
+			return false;
+		return true;
+	}
+	
+	/**
+	 * crea copia (clone) dell'ooggetto (this),come nuovo oggetto
+	 */
+	public Voto clone() {
+		Voto v= new Voto(this.corso,this.voto,this.data);
+		return v;
+	}
+	
+	public int compareTo(Voto other) {
+		
+		return this.corso.compareTo(other.corso);
+	}
+	
 	
 	
 	
